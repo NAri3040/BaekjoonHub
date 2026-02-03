@@ -1,38 +1,38 @@
 #include <stdio.h>
 
 int main(void) {
-    int N = 0, M = 0;
-    int count = 0;
-    int Psum = 0;
-    int Pitem = 0;
+    int N, M;
+    int sum = 0;
+    int min_prime = -1; 
+
     scanf("%d", &M);
     scanf("%d", &N);
-        
-        for (int i = M; i <= N; i++) {
-            count = 0;
-            for (int j = 1; j <= 10000; j++) {
-                if (i % j == 0) {
-                    count++;
-                }
 
-                if (count > 2) {
-                    break;
-                }
-            }
-            if (count == 2) {
-                if (Pitem > i || Psum == 0) {
-                    Pitem = i;
-                }
-                Psum += i;
+    for (int i = M; i <= N; i++) {
+        if (i == 1) continue;
+
+        int is_prime = 1;
+
+        for (int j = 2; j * j <= i; j++) {
+            if (i % j == 0) {
+                is_prime = 0;
+                break;
             }
         }
 
-    if (Pitem == 0) {
+        if (is_prime) {
+            if (min_prime == -1) {
+                min_prime = i;
+            }
+            sum += i;
+        }
+    }
+
+    if (min_prime == -1) {
         printf("-1");
     }
-    else
-    {
-        printf("%d\n%d",Psum, Pitem);
+    else {
+        printf("%d\n%d", sum, min_prime);
     }
 
     return 0;
